@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Before using this script: connect to Wi-Fi; manually setup IP 10.0.1.1, mask 255.0.0.0 (and if that's not enough - default gateway: 10.0.0.1)
+# Before using this script: manually connect to Wi-Fi; setup IP 10.0.1.1, mask 255.0.0.0 (and if that's not enough - default gateway: 10.0.0.1)
 # Password of MY device: rjo1Tvr4
 
 import sys, json
@@ -12,9 +12,7 @@ pId = 0
 headers = {"Content-type": "text/plain", "Accept": "*/*", "X-Requested-With": "com.sony.playmemories.mobile"}
 
 AUTH_CONST_STRING = "90adc8515a40558968fe8318b5b023fdd48d3828a2dda8905f3b93a3cd8e58dc"
-
 METHODS_TO_ENABLE = "camera/setFlashMode:camera/getFlashMode:camera/getSupportedFlashMode:camera/getAvailableFlashMode:camera/setExposureCompensation:camera/getExposureCompensation:camera/getSupportedExposureCompensation:camera/getAvailableExposureCompensation:camera/setSteadyMode:camera/getSteadyMode:camera/getSupportedSteadyMode:camera/getAvailableSteadyMode:camera/setViewAngle:camera/getViewAngle:camera/getSupportedViewAngle:camera/getAvailableViewAngle:camera/setMovieQuality:camera/getMovieQuality:camera/getSupportedMovieQuality:camera/getAvailableMovieQuality:camera/setFocusMode:camera/getFocusMode:camera/getSupportedFocusMode:camera/getAvailableFocusMode:camera/setStillSize:camera/getStillSize:camera/getSupportedStillSize:camera/getAvailableStillSize:camera/setBeepMode:camera/getBeepMode:camera/getSupportedBeepMode:camera/getAvailableBeepMode:camera/setCameraFunction:camera/getCameraFunction:camera/getSupportedCameraFunction:camera/getAvailableCameraFunction:camera/setLiveviewSize:camera/getLiveviewSize:camera/getSupportedLiveviewSize:camera/getAvailableLiveviewSize:camera/setTouchAFPosition:camera/getTouchAFPosition:camera/cancelTouchAFPosition:camera/setFNumber:camera/getFNumber:camera/getSupportedFNumber:camera/getAvailableFNumber:camera/setShutterSpeed:camera/getShutterSpeed:camera/getSupportedShutterSpeed:camera/getAvailableShutterSpeed:camera/setIsoSpeedRate:camera/getIsoSpeedRate:camera/getSupportedIsoSpeedRate:camera/getAvailableIsoSpeedRate:camera/setExposureMode:camera/getExposureMode:camera/getSupportedExposureMode:camera/getAvailableExposureMode:camera/setWhiteBalance:camera/getWhiteBalance:camera/getSupportedWhiteBalance:camera/getAvailableWhiteBalance:camera/setProgramShift:camera/getSupportedProgramShift:camera/getStorageInformation:camera/startLiveviewWithSize:camera/startIntervalStillRec:camera/stopIntervalStillRec:camera/actFormatStorage:system/setCurrentTime"
-#METHODS_TO_ENABLE = "camera/setFlashMode:camera/getFlashMode"
 
 def postRequest(target, req):
     global conn
@@ -92,7 +90,6 @@ if __name__ == "__main__":
     #req = {"method": "getApplicationInfo", "params": [], "id": 2, "version": "1.0"}
     #req = {"method": "getEvent", "params": [False], "id": 3, "version": "1.0"}        # (!!!) get method list
     #req = {"method": "getEvent", "params": [True], "id": 4, "version": "1.0"}
-    #req = {"method": "stopLiveview", "params": [], "id": 6, "version": "1.0"}
     #req = {"method": "getMethodTypes", "params": ["1.0"], "id": 8, "version": "1.0"}
     #req = {"method": "getFocusMode", "params": [], "id": 9, "version": "1.0"}
 
