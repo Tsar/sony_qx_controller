@@ -144,13 +144,29 @@ def communicationThread():
 
     #resp = postRequest(conn, "camera", {"method": "setStillSize", "params": ["20M", "3:2"], "version": "1.0"})
 
+    resp = postRequest(conn, "camera", {"method": "setFocusMode", "params": ["AF-S"], "version": "1.0"})
+    resp = postRequest(conn, "camera", {"method": "getFocusMode", "params": [], "version": "1.0"})
+
     resp = postRequest(conn, "camera", {"method": "stopLiveview", "params": [], "version": "1.0"})
 
     resp = postRequest(conn, "camera", {"method": "startLiveview", "params": [], "version": "1.0"})
     liveviewFromUrl(resp["result"][0])
 
-    resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
-    downloadImage(resp["result"][0][0])
+    #resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
+    #downloadImage(resp["result"][0][0])
+
+    resp = postRequest(conn, "camera", {"method": "getAvailableFocusMode", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "getSupportedFocusMode", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "getTouchAFPosition", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "getSupportedFNumber", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "setFocusMode", "params": ["MF"], "version": "1.0"})
+    resp = postRequest(conn, "camera", {"method": "getFocusMode", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "getEvent", "params": [False], "version": "1.0"})
 
     conn.close()
 
