@@ -3,7 +3,7 @@
 # Before using this script: manually connect to Wi-Fi; setup IP 10.0.1.1, mask 255.0.0.0 (and if that's not enough - default gateway: 10.0.0.1)
 # Password of MY device: rjo1Tvr4
 
-import sys, json
+import sys, json, time
 import http.client, urllib.parse
 import threading
 import base64, hashlib
@@ -153,12 +153,16 @@ def communicationThread():
     resp = postRequest(conn, "camera", {"method": "stopLiveview", "params": [], "version": "1.0"})
 
     resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["Original"], "version": "1.0"})
+    while "error" in resp:
+        resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["Original"], "version": "1.0"})
     resp = postRequest(conn, "camera", {"method": "getPostviewImageSize", "params": [], "version": "1.0"})
 
     resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
     downloadImage(resp["result"][0][0])
 
     resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["2M"], "version": "1.0"})
+    while "error" in resp:
+        resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["2M"], "version": "1.0"})
     resp = postRequest(conn, "camera", {"method": "getPostviewImageSize", "params": [], "version": "1.0"})
 
     resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
@@ -186,7 +190,18 @@ def communicationThread():
     resp = postRequest(conn, "camera", {"method": "getEvent", "params": [False], "version": "1.0"})
 
     resp = postRequest(conn, "camera", {"method": "startLiveview", "params": [], "version": "1.0"})
-    liveviewFromUrl(resp["result"][0])
+    liveview = threading.Thread(target = liveviewFromUrl, args = (resp["result"][0],))
+    liveview.start()
+
+    resp = postRequest(conn, "camera", {"method": "actZoom", "params": ["in", "start"], "version": "1.0"})
+    time.sleep(2)
+    resp = postRequest(conn, "camera", {"method": "actZoom", "params": ["in", "stop"], "version": "1.0"})
+
+    time.sleep(3)
+
+    resp = postRequest(conn, "camera", {"method": "actZoom", "params": ["out", "start"], "version": "1.0"})
+    time.sleep(2.5)
+    resp = postRequest(conn, "camera", {"method": "actZoom", "params": ["out", "stop"], "version": "1.0"})
 
     conn.close()
 
