@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
-# Before using this script: manually connect to Wi-Fi; setup IP 10.0.1.1, mask 255.0.0.0 (and if that's not enough - default gateway: 10.0.0.1)
+# Script for managing Sony QX100 (or Sony QX10, not tested with it yet) from PC.
+# Supports AUTHORIZATION (!!!), which allows to use a lot of undocumented commands (such as setStillSize and others).
+
+# Before using this script: manually connect to Wi-Fi; set up IP 10.0.1.1, mask 255.0.0.0 (and if that's not enough - default gateway: 10.0.0.1).
 # Password of MY device: rjo1Tvr4
+# Note. Password can be taken from a text file in the internal memory of the device, connect it with USB and switch on for accessing this memory.
 
 import sys, json, time
 import http.client, urllib.parse
@@ -129,7 +133,6 @@ def communicationThread():
     #req = {"method": "getEvent", "params": [False], "id": 3, "version": "1.0"}        # (!!!) get method list
     #req = {"method": "getEvent", "params": [True], "id": 4, "version": "1.0"}
     #req = {"method": "getMethodTypes", "params": ["1.0"], "id": 8, "version": "1.0"}
-    #req = {"method": "getFocusMode", "params": [], "id": 9, "version": "1.0"}
 
     conn = http.client.HTTPConnection("10.0.0.1", 10000)
 
