@@ -50,10 +50,13 @@ def postRequest(conn, target, req):
     print("RESPONSE [%s]: " % target, end = "")
     #print(response.status, response.reason)
     data = json.loads(response.read().decode("UTF-8"))
+    print(data)
     if data["id"] != pId:
         print("FATAL ERROR: Response id does not match")
         return {}
-    print(data, end = "\n\n")
+    if "error" in data:
+        print("WARNING: Response contains error code: %d; error message: [%s]" % tuple(data["error"]))
+    print("")
     return data
 
 def exitWithError(conn, message):
@@ -138,7 +141,7 @@ def communicationThread():
 
     resp = postRequest(conn, "accessControl", {"method": "actEnableMethods", "params": [{"methods": METHODS_TO_ENABLE, "developerName": "Sony Corporation", "developerID": "7DED695E-75AC-4ea9-8A85-E5F8CA0AF2F3", "sg": sg}], "version": "1.0"})
 
-    #resp = postRequest(conn, "camera", {"method": "getStillSize", "params": [], "version": "1.0"})
+    resp = postRequest(conn, "camera", {"method": "getStillSize", "params": [], "version": "1.0"})
     #resp = postRequest(conn, "camera", {"method": "getSupportedStillSize", "params": [], "version": "1.0"})
     #resp = postRequest(conn, "camera", {"method": "getAvailableStillSize", "params": [], "version": "1.0"})
 
@@ -149,11 +152,25 @@ def communicationThread():
 
     resp = postRequest(conn, "camera", {"method": "stopLiveview", "params": [], "version": "1.0"})
 
-    resp = postRequest(conn, "camera", {"method": "startLiveview", "params": [], "version": "1.0"})
-    liveviewFromUrl(resp["result"][0])
+    resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["Original"], "version": "1.0"})
+    resp = postRequest(conn, "camera", {"method": "getPostviewImageSize", "params": [], "version": "1.0"})
 
-    #resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
-    #downloadImage(resp["result"][0][0])
+    resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
+    downloadImage(resp["result"][0][0])
+
+    resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["2M"], "version": "1.0"})
+    resp = postRequest(conn, "camera", {"method": "getPostviewImageSize", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
+    downloadImage(resp["result"][0][0])
+
+    resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["Original"], "version": "1.0"})
+    while "error" in resp:
+        resp = postRequest(conn, "camera", {"method": "setPostviewImageSize", "params": ["Original"], "version": "1.0"})
+    resp = postRequest(conn, "camera", {"method": "getPostviewImageSize", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
+    downloadImage(resp["result"][0][0])
 
     resp = postRequest(conn, "camera", {"method": "getAvailableFocusMode", "params": [], "version": "1.0"})
 
@@ -163,10 +180,13 @@ def communicationThread():
 
     resp = postRequest(conn, "camera", {"method": "getSupportedFNumber", "params": [], "version": "1.0"})
 
-    resp = postRequest(conn, "camera", {"method": "setFocusMode", "params": ["MF"], "version": "1.0"})
-    resp = postRequest(conn, "camera", {"method": "getFocusMode", "params": [], "version": "1.0"})
+    #resp = postRequest(conn, "camera", {"method": "setFocusMode", "params": ["MF"], "version": "1.0"})
+    #resp = postRequest(conn, "camera", {"method": "getFocusMode", "params": [], "version": "1.0"})
 
     resp = postRequest(conn, "camera", {"method": "getEvent", "params": [False], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "startLiveview", "params": [], "version": "1.0"})
+    liveviewFromUrl(resp["result"][0])
 
     conn.close()
 
