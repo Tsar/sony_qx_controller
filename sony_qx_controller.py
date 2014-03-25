@@ -100,6 +100,8 @@ def liveviewFromUrl(url):
             nextPart = response.read(1024)
             #flow.write(nextPart)
             #flow.flush()
+
+            # TODO: It would be better to use description from the documentation (page 51) for parsing liveview stream
             jpegStart = nextPart.find(b'\xFF\xD8\xFF')
             jpegEnd = nextPart.find(b'\xFF\xD9')
             if jpegEnd != -1:
