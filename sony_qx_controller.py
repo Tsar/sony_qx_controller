@@ -7,6 +7,8 @@
 # Password of MY device: rjo1Tvr4
 # Note. Password can be taken from a text file in the internal memory of the device, connect it with USB and switch on for accessing this memory.
 
+# This script depends on PyQt4 for displaying liveview. On Ubuntu just run command: apt-get install python3-pyqt4
+
 import sys, json, time
 import http.client, urllib.parse
 import threading
