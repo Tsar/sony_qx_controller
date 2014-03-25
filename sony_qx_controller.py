@@ -92,11 +92,14 @@ def liveviewFromUrl(url):
     conn3 = http.client.HTTPConnection(host, port)
     conn3.request("GET", address)
     response = conn3.getresponse()
+    #flow = open("liveview", "wb")
     if response.status == 200:
         buf = b''
         c = 0
         while not response.closed:
             nextPart = response.read(1024)
+            #flow.write(nextPart)
+            #flow.flush()
             jpegStart = nextPart.find(b'\xFF\xD8\xFF')
             jpegEnd = nextPart.find(b'\xFF\xD9')
             if jpegEnd != -1:
