@@ -150,6 +150,9 @@ def communicationThread():
 
     resp = postRequest(conn, "accessControl", {"method": "actEnableMethods", "params": [{"methods": METHODS_TO_ENABLE, "developerName": "Sony Corporation", "developerID": "7DED695E-75AC-4ea9-8A85-E5F8CA0AF2F3", "sg": sg}], "version": "1.0"})
 
+    resp = postRequest(conn, "system", {"method": "getMethodTypes", "params": ["1.0"], "version": "1.0"})
+    resp = postRequest(conn, "accessControl", {"method": "getMethodTypes", "params": ["1.0"], "version": "1.0"})
+
     resp = postRequest(conn, "camera", {"method": "getStillSize", "params": [], "version": "1.0"})
     #resp = postRequest(conn, "camera", {"method": "getSupportedStillSize", "params": [], "version": "1.0"})
     #resp = postRequest(conn, "camera", {"method": "getAvailableStillSize", "params": [], "version": "1.0"})
