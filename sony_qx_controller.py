@@ -175,10 +175,16 @@ def communicationThread():
     time.sleep(0.5)
     resp = postRequest(conn, "camera", {"method": "getShutterSpeed", "params": [], "version": "1.0"})
 
+    resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
+    downloadImage(resp["result"][0][0])
+
     resp = postRequest(conn, "camera", {"method": "setShutterSpeed", "params": ["1/1000"], "version": "1.0"})
     resp = postRequest(conn, "camera", {"method": "getShutterSpeed", "params": [], "version": "1.0"})
     time.sleep(0.5)
     resp = postRequest(conn, "camera", {"method": "getShutterSpeed", "params": [], "version": "1.0"})
+
+    resp = postRequest(conn, "camera", {"method": "actTakePicture", "params": [], "version": "1.0"})
+    downloadImage(resp["result"][0][0])
 
     #resp = postRequest(conn, "camera", {"method": "getStillSize", "params": [], "version": "1.0"})
     ##resp = postRequest(conn, "camera", {"method": "getSupportedStillSize", "params": [], "version": "1.0"})
